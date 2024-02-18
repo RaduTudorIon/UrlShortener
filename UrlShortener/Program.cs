@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using UrlShortener.Entities;
+using UrlShortener.Extensions;
 using UrlShortener.Models;
 using UrlShortener.Services;
 
@@ -33,6 +34,8 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.ApplyMigrations();
         }
 
         app.MapPost("api/shorten", async (
