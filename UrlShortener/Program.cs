@@ -65,6 +65,18 @@ public class Program
             return Results.Created(shortenedUrl.ShortUrl, shortenedUrl);
         });
 
+
+        app.MapGet("/{code}", async (string code, ApplicationDbContext dbContext) =>
+        {
+            var shortenedUrl = await dbContext.ShortenedUrls.FirstOrDefaultAsync(x => x.Code == code);
+            if (shortenedUrl == null)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Redirect(shortenedUrl.LongUrl);
+        });
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
